@@ -1,6 +1,18 @@
-# Product Reviews Sentiment Analyzer
+<br/>
+<p align="center">
+  <h1 align="center">Product Reviews Sentiment Analyzer</h1>
 
+  <p align="center">
+    <a href="https://flipkartreview1.azurewebsites.net/">View Demo</a>
+    .
+    <a href="https://github.com/prathmesh-yakkaldevi/Product-Reviews-Sentiment-Analyzer/issues">Report Bug</a>
+    .
+    <a href="https://github.com/prathmesh-yakkaldevi/Product-Reviews-Sentiment-Analyzer/issues">Request Feature</a>
+    <br>
 A web application for analyzing the sentiment of product reviews from Flipkart.
+  </p>
+</p>
+
 
 ## Features
 
