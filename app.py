@@ -12,7 +12,10 @@ from wordcloud import WordCloud,STOPWORDS
 from flask import Flask,render_template,request
 import time
 
-
+os.environ['NLTK_DATA'] = os.getcwd()
+# nltk.download('vader_lexicon')
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+sia = SentimentIntensityAnalyzer()
 # nltk.download('stopwords')
 # nltk.download('punkt')
 # nltk.download('wordnet')
@@ -173,23 +176,32 @@ def result():
         # x['sent'] = predictions[i]
         x['cn'] = customernames[i]
         x['ch'] = commentheads[i]
+        # print( x['review'], "----*---")
         x['stars'] = ratings[i]
         d.append(x)
     
-
     for i in d:
         if i['stars']!=0:
-            if i['stars'] in [1,2]:
-                i['sent'] = 'NEGATIVE'
-            else:
+            sentiment_scores = sia.polarity_scores(i['review'])
+            if sentiment_scores['compound'] >= 0:
                 i['sent'] = 'POSITIVE'
-    
+            elif sentiment_scores['compound'] < 0:
+                i['sent'] = 'NEGATIVE'
+
+# # # testing the feautre    # 
+#     c = 2
+#     for i in d:
+#         if c >= 0:
+#             if i['stars'] == 5:
+#                 c = c - 1
+#                 i['stars'] = 1
+
 
     np,nn =0,0
     for i in d:
         if i['sent']=='NEGATIVE':nn+=1
         else:np+=1
-
+    print(d)
     return render_template('result.html',dic=d,n=len(clean_reviews),nn=nn,np=np,proname=proname,price=price)
     
     
