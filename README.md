@@ -13,6 +13,7 @@ A web application for analyzing the sentiment of product reviews from Flipkart.
   </p>
 </p>
 
+https://github.com/prathmesh-yakkaldevi/Product-Reviews-Sentiment-Analyzer/assets/62748359/3df4880e-3edc-45d3-b630-704e37d611c7
 
 ## Features
 
@@ -26,7 +27,6 @@ A web application for analyzing the sentiment of product reviews from Flipkart.
 The latest update, which includes all the promised features, is currently in the "update" branch. The primary purpose of the "main" branch is to serve as the hosting platform and will remain separate from the "update" branch. This ensures that the hosting platform remains unaffected by the ongoing updates.
 
 
-https://github.com/prathmesh-yakkaldevi/Product-Reviews-Sentiment-Analyzer/assets/62748359/3df4880e-3edc-45d3-b630-704e37d611c7
 
 
 ## Installation
