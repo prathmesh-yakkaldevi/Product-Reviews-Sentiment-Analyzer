@@ -22,6 +22,13 @@ A web application for analyzing the sentiment of product reviews from Flipkart.
 - Provides an intuitive user interface for inputting Flipkart product links.
 - Deployed on Flask web framework for easy accessibility.
 
+## Note
+The latest update, which includes all the promised features, is currently in the "update" branch. The primary purpose of the "main" branch is to serve as the hosting platform and will remain separate from the "update" branch. This ensures that the hosting platform remains unaffected by the ongoing updates.
+
+
+https://github.com/prathmesh-yakkaldevi/Product-Reviews-Sentiment-Analyzer/assets/62748359/3df4880e-3edc-45d3-b630-704e37d611c7
+
+
 ## Installation
 
 1. Clone the repository:
@@ -40,6 +47,9 @@ python app.py
 1. Open your web browser and navigate to `http://localhost:5000`.
 
 2. Enter the Flipkart product link in the provided input field.
+```
+https://www.flipkart.com/durafit-mustang-6-hp-peak-dc-motorized-treadmill-free-installation-assistance/p/itm4a01f9221f62b?pid=TRDGDZH63HEM5QPZ&lid=LSTTRDGDZH63HEM5QPZ2CUFCP&marketplace=FLIPKART&store=qoc&srno=b_1_2&otracker=browse&fm=organic&iid=en_WPClllrUWvGhjEncaqY0ReQlsBwygoZlAbc9V9qGEFnCVUWnNWM7uHDEoNFpVq515YrvAymjlO9z4Nza-FHhBw%3D%3D&ppt=browse&ppn=browse&ssid=5pyb4ng0q80000001689239287764
+```
 
 3. Click the "Analyze" button to initiate the sentiment analysis process.
 
