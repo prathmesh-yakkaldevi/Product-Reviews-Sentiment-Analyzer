@@ -15,6 +15,9 @@ A web application for analyzing the sentiment of product reviews from Flipkart.
 
 https://github.com/prathmesh-yakkaldevi/Product-Reviews-Sentiment-Analyzer/assets/62748359/3df4880e-3edc-45d3-b630-704e37d611c7
 
+## Note
+Promised features are located in the "update" branch. The "main" branch, which is solely used for hosting, will remain untouched by any merging from the update branch.
+
 ## Features
 
 - Extracts and analyzes product reviews from Flipkart using BeautifulSoup (bs4) and NLTK.
@@ -23,8 +26,6 @@ https://github.com/prathmesh-yakkaldevi/Product-Reviews-Sentiment-Analyzer/asset
 - Provides an intuitive user interface for inputting Flipkart product links.
 - Deployed on Flask web framework for easy accessibility.
 
-## Note
-The latest update, which includes all the promised features, is currently in the "update" branch. The primary purpose of the "main" branch is to serve as the hosting platform and will remain separate from the "update" branch. This ensures that the hosting platform remains unaffected by the ongoing updates.
 
 
 
