@@ -31,6 +31,12 @@
     .checked {
         color: orange;
     }
+    .container {
+            display: flex;
+            justify-content: center; /* Horizontally center */
+            align-items: center; /* Vertically center */
+            height: 100vh; /* Make the container the full height of the viewport */
+        }
 </style>
 
 <head>
@@ -113,7 +119,10 @@
                 NEGATIVE REVIEWS --> {{nn}}/{{n}}</p>
         </div>
     </div>
-
+    <div class="container">
+        <!-- <h1>Dynamic Pie Chart</h1> -->
+        <img src="{{ url_for('static', filename='images/pie.png') }}" alt="Pie Chart">
+    </div>
 
     {% for obj in dic %}
     <div class="card my-5 " style="max-width: 1000px;">
@@ -170,7 +179,7 @@
     <footer class='text-light bg-dark position-relative '>
         <p class='text-center py-1 my-0'>
             Made with ❤ by 
-            <a href="https://www.linkedin.com/in/prathmesh-yakkaldevi/">Parthmesh</a>
+            <a href="https://www.linkedin.com/in/prathmesh-yakkaldevi/">Prathmesh</a>
         </p>
     </footer>
 

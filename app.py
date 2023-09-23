@@ -12,7 +12,10 @@ from wordcloud import WordCloud,STOPWORDS
 from flask import Flask,render_template,request
 import time
 
-
+os.environ['NLTK_DATA'] = os.getcwd()
+# nltk.download('vader_lexicon')
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+sia = SentimentIntensityAnalyzer()
 # nltk.download('stopwords')
 # nltk.download('punkt')
 # nltk.download('wordnet')
@@ -78,7 +81,7 @@ def extract_all_reviews(url, clean_reviews, org_reviews,customernames,commenthea
             ra.append(r.get_text())
         
     ratings += ra
-    print(ratings)
+    # print(ratings)
 
 def tokenizer(s):
     s = s.lower()      # convert the string to lower case
@@ -106,7 +109,6 @@ def home():
 @app.route('/results',methods=['GET'])
 def result():    
     url = request.args.get('url')
-
     nreviews = int(request.args.get('num'))
     clean_reviews = []
     org_reviews = []
@@ -117,34 +119,37 @@ def result():
     with urllib.urlopen(url) as u:
         page = u.read()
         page_html = BeautifulSoup(page, "html.parser")
-
-    proname = page_html.find_all('span', {'class': 'B_NuCI'})[0].get_text()
-    price = page_html.find_all('div', {'class': '_30jeq3 _16Jk6d'})[0].get_text()
     
-    # getting the link of see all reviews button
-    all_reviews_url = page_html.find_all('div', {'class': 'col JOpGWq'})[0]
-    all_reviews_url = all_reviews_url.find_all('a')[-1]
-    all_reviews_url = 'https://www.flipkart.com'+all_reviews_url.get('href')
-    url2 = all_reviews_url+'&page=1'
-    
+    proname = ""
+    proname = page_html.find('div', class_='_2s4DIt _1CDdy2').text
+    soup = page_html
+    price = "Could not get"
+    price = soup.find('div', class_='_30jeq3').text
+    review_div = soup.find_all('div', class_='t-ZTKy')
+    review_stars = soup.find_all('div', class_='_3LWZlK _1BLPMq')
+    review_name = soup.find_all('p', class_='_2sc7ZR _2V5EHH')
+    review_head = soup.find_all('p', class_='_2-N8zT')
+    d = []
+    for i in range(len(review_div)):
+        if(i == nreviews):
+            break
+        x = {}
+        x['review'] = review_div[i].text
+        # x['sent'] = predictions[i]
+        x['cn'] = review_name[i].text
+        x['ch'] = review_head[i].text
+        # print( x['review'], "----*---")
+        x['stars'] = int(review_stars[i].text)
+        if(x['stars'] >= 3):
+            x['sent'] = 'POSITIVE'
+        else:
+            x['sent'] = 'NEGATIVE'
+        d.append(x)
 
-    # start reading reviews and go to next page after all reviews are read 
-    while True:
-        x = len(clean_reviews)
-        # extracting the reviews
-        extract_all_reviews(url2, clean_reviews, org_reviews,customernames,commentheads,ratings)
-        url2 = url2[:-1]+str(int(url2[-1])+1)
-        if x == len(clean_reviews) or len(clean_reviews)>=nreviews:break
-
-    org_reviews = org_reviews[:nreviews]
-    clean_reviews = clean_reviews[:nreviews]
-    customernames = customernames[:nreviews]
-    commentheads = commentheads[:nreviews]
-    ratings = ratings[:nreviews]
-
-
-    # building our wordcloud and saving it
-    for_wc = ' '.join(clean_reviews)
+    review = []
+    for x in review_div:
+        review.append(x.text)
+    for_wc = ' '.join(review)
     wcstops = set(STOPWORDS)
     wc = WordCloud(width=1400,height=800,stopwords=wcstops,background_color='white').generate(for_wc)
     plt.figure(figsize=(20,10), facecolor='k', edgecolor='k')
@@ -155,43 +160,33 @@ def result():
     plt.savefig('static/images/woc.png')
     plt.close()
 
+    review_stars_list = []
+    for x in review_stars:
+        review_stars_list.append(int(x.text))
+    ratings = [1, 2, 3, 4, 5]
+    quantity = [0,0,0,0,10]
+    for x in review_stars_list:
+    # print(x)
+        quantity[x-1] = quantity[x-1]+1
+    # print(quantity)
+    # quantity = [500, 100, 249, 100, 50]
+    plt.figure(figsize=(5, 5))
+    plt.pie(quantity, labels=ratings, autopct='%1.1f%%', startangle=0, pctdistance=0.85)
+    plt.axis('equal')
+    plt.title("Sample Ratings Distribution")
+    # plt.show()
+    plt.savefig('static/images/pie.png')
+    plt.close()
+    # url = url_for('static', filename='images/pie.png')
 
-    # predictions = []
-    # for i in range(len(org_reviews)):
-    #     vector = tokens_2_vectors(tokenizer(clean_reviews[i]))
-    #     vector = vector[:-1]
-    #     if model.predict([vector])[0] == 1:
-    #         predictions.append('POSITIVE')
-    #     else:
-    #         predictions.append('NEGATIVE')
-    
-    # making a dictionary of product attributes and saving all the products in a list
-    d = []
-    for i in range(len(org_reviews)):
-        x = {}
-        x['review'] = org_reviews[i]
-        # x['sent'] = predictions[i]
-        x['cn'] = customernames[i]
-        x['ch'] = commentheads[i]
-        x['stars'] = ratings[i]
-        d.append(x)
-    
-
-    for i in d:
-        if i['stars']!=0:
-            if i['stars'] in [1,2]:
-                i['sent'] = 'NEGATIVE'
-            else:
-                i['sent'] = 'POSITIVE'
-    
 
     np,nn =0,0
     for i in d:
         if i['sent']=='NEGATIVE':nn+=1
         else:np+=1
+    # print(d)
+    return render_template('result.html',dic=d,n=nreviews,nn=nn,np=np,proname=proname,price=price)
 
-    return render_template('result.html',dic=d,n=len(clean_reviews),nn=nn,np=np,proname=proname,price=price)
-    
     
 @app.route('/wc')
 def wc():
@@ -210,7 +205,7 @@ class CleanCache:
 			# iterate over the files and remove each file
 			files = os.listdir(self.clean_path)
 			for fileName in files:
-				print(fileName)
+				# print(fileName)
 				os.remove(os.path.join(self.clean_path,fileName))
 		print("cleaned!")
 

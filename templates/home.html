@@ -9,7 +9,7 @@
     }
 
     body {
-        background-image: url('static/5.jpg');
+        background-image: url('static/5.png');
         background-repeat: no-repeat;
         background-attachment: fixed;
         background-size: cover;
@@ -67,7 +67,7 @@
 
 <body>
     <div>
-        <h2 style="text-align: center;padding-top: 15px;padding-bottom: 15px;color:whitesmoke;font-size:65px;">Product
+        <h2 style="text-align: center;padding-top: 15px;padding-bottom: 15px;color:rgb(188, 24, 49);font-size:65px;">Product
             Reviews Sentiment Analyzer</h2>
 
     </div>
@@ -75,15 +75,19 @@
     <div>
         <form action="results">
             <div class="form-group">
-                <h2 style="text-align: center;padding-top: 77px;padding-bottom: 15px;color:bisque;font-size: 45px;">
-                    <i>Enter the product page url...</i></h2>
+                <h2 style="text-align: center;padding-top: 77px;padding-bottom: 15px;color:rgb(188, 24, 49);font-size: 45px;">
+                    <i></i></h2>
+                    <!-- <i>Enter the product page url...</i></h2> -->
+                    <br>
+                    <br>
+                    <br>
                 <div style="margin: 0 auto;width: 60%;">
                     
                     <input type="url" class="form-control" name='url' id="url" style='border-radius:1.25rem;margin-top: 10px;
-                        margin-bottom: 30px;height: 70px;' placeholder='Please enter a valid url'>
+                        margin-bottom: 30px;height: 70px;' value = "https://www.flipkart.com/apple-iphone-6-plus-silver-64-gb/product-reviews/itmefjg7zpzfgb3c?pid=MOBEYHZ28ZYTRJYM&lid=LSTMOBEYHZ28ZYTRJYM7U1VJ8&sortOrder=MOST_HELPFUL&certifiedBuyer=false&aid=overall" placeholder='Please enter a valid url'>
                     
-                    <input type="number" class="form-control" name='num' id="num" style='border-radius:1.25rem;height: 70px;margin-bottom: 40px;
-                        ' placeholder='Please enter the no. of reviews you want to analyze'>
+                    <input type="number" class="form-control" name='num' id="num" style='border-radius:1.25rem;height: 70px;margin-bottom: 40px;'
+                    value="5" placeholder='Please enter the no. of reviews you want to analyze'>
                     
                     <div style="text-align: center" ;>
                         <button style="width: 280px;font-size: 30px;height: 62px;border-radius: 2.25rem;" type="submit" class="btn btn-primary" onclick="spinner()">Search</button>
@@ -102,7 +106,7 @@
     <footer class='text-light bg-dark position-absolute fixed-bottom '>
         <p class='text-center py-1 my-0'>
             Made with ❤ by 
-            <a href="https://www.linkedin.com/in/prathmesh-yakkaldevi/">Parthmesh</a>
+            <a href="https://www.linkedin.com/in/prathmesh-yakkaldevi/">Prathmesh</a>
         </p>
     </footer>
 
